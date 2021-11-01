@@ -39,7 +39,8 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.bank_line_s_3 = cls.env["account.bank.statement.line"].create(
             {
                 "statement_id": cls.bank_st_s.id,
-                "payment_ref": "ABC001XYZ",
+                "name": "ABC001XYZ",
+                "payment_ref": "REF0003",
                 "partner_id": cls.partner_s_3.id,
                 "amount": 135,
                 "sequence": 1,
@@ -48,7 +49,8 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.bank_line_s_4 = cls.env["account.bank.statement.line"].create(
             {
                 "statement_id": cls.bank_st_s.id,
-                "payment_ref": "ABC002XYZ",
+                "name": "ABC002XYZ",
+                "payment_ref": "REF0004",
                 "partner_id": cls.partner_s_4.id,
                 "amount": 270,
                 "sequence": 2,
@@ -57,7 +59,8 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.bank_line_s_5 = cls.env["account.bank.statement.line"].create(
             {
                 "statement_id": cls.bank_st_s.id,
-                "payment_ref": "ABC003XYZ",
+                "name": "ABC003XYZ",
+                "payment_ref": "REF0005",
                 "partner_id": cls.partner_s_5.id,
                 "amount": 405,
                 "sequence": 3,
@@ -66,14 +69,13 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.bank_line_s_6 = cls.env["account.bank.statement.line"].create(
             {
                 "statement_id": cls.bank_st_s.id,
-                "payment_ref": "ABC004XYZ",
+                "name": "ABC004XYZ",
+                "payment_ref": "REF0006",
                 "partner_id": cls.partner_s_6.id,
                 "amount": 540,
                 "sequence": 4,
             }
         )
-        cls.bank_st_s.balance_end_real = cls.bank_st_s.balance_end
-        cls.bank_st_s.button_post()
 
     def test_auto_reconcile_strict_match_100(self):
         my_rule = self.env["account.reconcile.model"].create(
@@ -118,25 +120,21 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
                 self.bank_line_s_3.id: {
                     "aml_ids": [self.invoice_line_s_5.id],
                     "model": my_rule,
-                    "status": "reconciled",
                     "partner": self.partner_s_3,
                 },
                 self.bank_line_s_4.id: {
                     "aml_ids": [self.invoice_line_s_6.id],
                     "model": my_rule,
-                    "status": "reconciled",
                     "partner": self.partner_s_4,
                 },
                 self.bank_line_s_5.id: {
                     "aml_ids": [self.invoice_line_s_7.id],
                     "model": my_rule,
-                    "status": "reconciled",
                     "partner": self.partner_s_5,
                 },
                 self.bank_line_s_6.id: {
                     "aml_ids": [self.invoice_line_s_8.id],
                     "model": my_rule,
-                    "status": "reconciled",
                     "partner": self.partner_s_6,
                 },
             },
